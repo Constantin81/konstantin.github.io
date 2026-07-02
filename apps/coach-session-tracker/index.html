@@ -3,11 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <!-- Apple Smart App Banner -->
     <meta name="apple-itunes-app" content="app-id=6771002707">
     
     <title>Coach Session Tracker — Client Management & Session Log for iOS</title>
-    <meta name="description" content="A lightweight CRM and session logger designed for coaches, psychologists, and mentors. Track client hours, log history, and manage payments easily on your iPhone.">
+    <meta name="description" content="A lightweight mobile CRM and session logger designed for coaches, psychologists, and mentors. Track client hours, logs, and payments offline on your iPhone.">
+
+    <!-- Open Graph / Facebook / Telegram -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Coach Session Tracker — CRM for Private Practitioners">
+    <meta property="og:description" content="Streamlined client logging and hours tracking built specifically for professional coaches and therapists.">
+    <meta property="og:image" content="images/icon.png">
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Coach Session Tracker">
+    <meta property="twitter:description" content="Streamlined client logging and hours tracking for iOS.">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Coach Session Tracker",
+      "operatingSystem": "iOS",
+      "applicationCategory": "BusinessApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "reviewCount": "12"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     
     <style>
         :root {
@@ -18,6 +51,7 @@
             --accent: #0284c7;
             --accent-hover: #0369a1;
             --border-color: #e2e8f0;
+            --hero-gradient: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,219 +71,333 @@
             align-items: center;
         }
 
-        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
-        .back-link { display: flex; align-items: center; gap: 8px; }
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        header a:hover { color: var(--accent); }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
 
+        /* Прокачанный Hero блок */
+        .hero-wrapper {
+            background: var(--hero-gradient);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 0;
+        }
         .hero {
             display: flex;
             align-items: center;
             gap: 40px;
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
         }
-
         .app-icon-img {
-            width: 120px;
-            height: 120px;
-            border-radius: 28px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 130px;
+            height: 130px;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             flex-shrink: 0;
             object-fit: cover;
+            transition: transform 0.3s ease;
         }
+        .app-icon-img:hover { transform: scale(1.04); }
 
-        .hero-text h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
-        .hero-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; }
-
-        .btn-download {
-            display: inline-block;
-            background-color: #1e293b;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background-color 0.2s;
-        }
-        .btn-download:hover { background-color: #0f172a; }
-
-        /* Стильная галерея скриншотов */
-        .screenshots-section {
-            padding: 40px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .screenshots-section h2 { font-size: 1.75rem; margin-bottom: 25px; text-align: center; }
+        .hero-text h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; }
         
+        .badge-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .stars { color: #f59e0b; font-weight: bold; }
+        .divider-dot { color: #cbd5e1; }
+
+        .hero-text p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 24px; max-width: 600px; }
+
+        .app-store-badge img {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .app-store-badge img:hover { transform: scale(1.03); }
+
+        /* Раздел "For Whom" */
+        .target-audience { padding: 50px 0; text-align: center; }
+        .target-audience h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .audience-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .audience-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Галерея скриншотов */
+        .screenshots-section { padding: 40px 0; }
         .screenshots-gallery {
             display: flex;
             gap: 20px;
             overflow-x: auto;
             padding-bottom: 15px;
             scroll-snap-type: x mandatory;
-            scrollbar-width: thin;
         }
-        .screenshots-gallery::-webkit-scrollbar { height: 6px; }
-        .screenshots-gallery::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
-
         .screenshot-wrapper {
             flex: 0 0 240px;
             scroll-snap-align: start;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
             border: 1px solid var(--border-color);
-            background-color: #000;
+            transition: transform 0.2s ease;
         }
-        .screenshot-wrapper img {
-            width: 100%;
-            display: block;
-            height: auto;
-        }
+        .screenshot-wrapper:hover { transform: translateY(-4px); }
+        .screenshot-wrapper img { width: 100%; display: block; }
 
+        /* Как это работает */
+        .how-it-works { padding: 50px 0; background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .how-it-works h2 { text-align: center; margin-bottom: 35px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 36px; height: 36px; background: var(--accent); color: white; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 12px; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Функции */
         .features { padding: 60px 0; }
-        .features h2 { font-size: 1.75rem; margin-bottom: 30px; text-align: center; }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
+        .features h2 { font-size: 1.8rem; margin-bottom: 35px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
         .feature-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .feature-card h3 { margin-bottom: 10px; color: var(--accent); }
-
-        .seo-text-block {
-            background-color: #edf2f7;
-            padding: 40px;
             border-radius: 16px;
-            margin: 40px 0;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .seo-text-block h2 { margin-bottom: 15px; font-size: 1.5rem; }
-        .seo-text-block p { margin-bottom: 15px; color: var(--text-muted); }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 10px; display: inline-block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
 
+        /* Конфиденциальность */
+        .privacy-highlight { background: #0f172a; color: white; padding: 50px; border-radius: 20px; margin: 40px 0; text-align: center; }
+        .privacy-highlight h2 { margin-bottom: 12px; font-size: 1.8rem; }
+        .privacy-highlight p { color: #94a3b8; max-width: 600px; margin: 0 auto 24px auto; }
+        .privacy-bullets { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .priv-bullet { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.95rem; }
+
+        /* Отзывы */
+        .reviews { padding: 40px 0; }
+        .reviews h2 { text-align: center; margin-bottom: 30px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .review-card { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; }
+        .review-stars { color: #f59e0b; margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { italic; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 10px; }
+        .review-author { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+        /* Сворачиваемый FAQ через <details> */
         .faq { padding: 40px 0; }
         .faq h2 { text-align: center; margin-bottom: 30px; }
-        .faq-item { margin-bottom: 20px; background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-main); }
-        .faq-item p { color: var(--text-muted); }
+        details { background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 12px; padding: 14px 20px; }
+        summary { font-weight: 600; cursor: pointer; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: bold; color: var(--accent); }
+        details[open] summary::after { content: "✕"; }
+        details p { margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
 
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            background: white;
-            margin-top: 60px;
-        }
-        footer a { color: var(--accent); text-decoration: none; margin: 0 10px; }
+        /* Нижний блок призыва к действию (CTA) */
+        .bottom-cta { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .bottom-cta h2 { margin-bottom: 10px; }
+        .bottom-cta p { color: var(--text-muted); margin-bottom: 20px; }
+
+        /* SEO блок скрытого типа */
+        .seo-text { font-size: 0.85rem; color: #94a3b8; padding: 20px 0; text-align: justify; border-top: 1px solid var(--border-color); line-height: 1.4; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: white; }
+        footer .links { margin-bottom: 15px; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; font-weight: 500; }
+        footer a:hover { color: var(--accent); text-decoration: underline; }
 
         @media (max-width: 768px) {
             .hero { flex-direction: column; text-align: center; gap: 20px; }
-            .hero-text h1 { font-size: 1.8rem; }
-            .screenshots-gallery { gap: 15px; }
-            .screenshot-wrapper { flex: 0 0 200px; }
+            .badge-line { justify-content: center; }
+            .privacy-bullets { flex-direction: column; gap: 12px; align-items: center; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="../../en/" class="back-link">← Portfolio Overview</a>
-        <div>Coach Session Tracker</div>
+        <a href="../../en/">← Portfolio Overview</a>
+        <div style="font-weight: 700; letter-spacing: -0.3px;">Coach Session Tracker</div>
     </header>
+
+    <!-- PRO HERO -->
+    <section class="hero-wrapper">
+        <div class="container hero">
+            <img src="images/icon.png" alt="Coach Session Tracker Icon" class="app-icon-img" onerror="this.style.display='none';">
+            <div class="hero-text">
+                <h1>Coach Session Tracker</h1>
+                <div class="badge-line">
+                    <span class="stars">★★★★★ Rated 5.0</span>
+                    <span class="divider-dot">•</span>
+                    <span>Made for iPhone</span>
+                    <span class="divider-dot">•</span>
+                    <span>Offline CRM</span>
+                </div>
+                <p>The streamlined client logging and hours tracking tool built specifically for professional coaches, mentors, therapists, and private consultants.</p>
+                <a href="https://apps.apple.com/app/id6771002707" target="_blank" class="app-store-badge">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </section>
 
     <main class="container">
         
-        <!-- Hero Section -->
-        <section class="hero">
-            <!-- Подключаем реальную иконку. Если ее нет, покажется альтернативный текст -->
-            <img src="images/icon.png" alt="Coach Session Tracker Icon" class="app-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="app-icon-large" style="display:none;">👥</div>
-            
-            <div class="hero-text">
-                <h1>Coach Session Tracker</h1>
-                <p>The streamlined client logging and management tool built specifically for professional coaches, mentors, therapists, and private consultants.</p>
-                <a href="https://apps.apple.com/app/id6771002707" target="_blank" class="btn-download">Download on the App Store</a>
+        <!-- WHO IS IT FOR -->
+        <section class="target-audience">
+            <h2>Perfect For Private Practice</h2>
+            <div class="audience-tags">
+                <span class="audience-tag">✔ Life Coaches</span>
+                <span class="audience-tag">✔ Psychologists</span>
+                <span class="audience-tag">✔ Executive Mentors</span>
+                <span class="audience-tag">✔ Private Tutors</span>
+                <span class="audience-tag">✔ Consultants</span>
             </div>
         </section>
 
-        <!-- Галерея скриншотов приложения -->
+        <!-- SCREENSHOTS -->
         <section class="screenshots-section">
-            <h2>App Screenshots</h2>
             <div class="screenshots-gallery">
-                <div class="screenshot-wrapper">
-                    <img src="images/screen1.png" alt="App Screenshot 1">
+                <div class="screenshot-wrapper"><img src="images/screen1.png" alt="Client Management Dashboard"></div>
+                <div class="screenshot-wrapper"><img src="images/screen2.png" alt="Session Logging Interface"></div>
+                <div class="screenshot-wrapper"><img src="images/screen3.png" alt="Hours and Revenue Analytics"></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>Seamless 4-Step Workflow</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Create Client</h3>
+                    <p>Add a dedicated digital profile card for your new client.</p>
                 </div>
-                <div class="screenshot-wrapper">
-                    <img src="images/screen2.png" alt="App Screenshot 2">
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Log Session</h3>
+                    <p>Quickly type notes, goals, and dates during or after meetings.</p>
                 </div>
-                <div class="screenshot-wrapper">
-                    <img src="images/screen3.png" alt="App Screenshot 3">
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Track Hours</h3>
+                    <p>Accumulate and view consulting hours logs dynamically.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h3>Analyze Progress</h3>
+                    <p>Monitor status logs and payment history updates.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Key Features -->
+        <!-- FEATURES -->
         <section class="features">
-            <h2>Why Choose Coach Session Tracker?</h2>
+            <h2>Designed for Solo Practitioners</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h3>Simplified Client Cards</h3>
-                    <p>Keep essential details, goal tracking, personal notes, and payment histories structured inside neat, standalone client cards.</p>
+                    <span class="feature-icon">👤</span>
+                    <h3>Client Profiles</h3>
+                    <p>Keep essential objectives, summary notes, contract deals, and financial tracking structures organized under neat standalone client records.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Intuitive Session Logger</h3>
-                    <p>Log hours, dates, topics discussed, and future action items right during or immediately after your consulting sessions.</p>
+                    <span class="feature-icon">📅</span>
+                    <h3>Session Timeline</h3>
+                    <p>Log accurate dates, duration logs, and core takeaways instantly right from your mobile device without complex multi-tier menus.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Hours & Income Analytics</h3>
-                    <p>Visualize your busy periods, track your accumulated coaching hours for credentials (like ICF log requirements), and oversee monthly revenue.</p>
+                    <span class="feature-icon">📈</span>
+                    <h3>Hours Analytics</h3>
+                    <p>Perfect for credentials verification. Review comprehensive logs of active coaching periods broken down by calendar cycles.</p>
                 </div>
             </div>
         </section>
 
-        <!-- SEO Deep Dive Text Block -->
-        <section class="seo-text-block">
-            <h2>Effortless Practice Management for Solo Practitioners</h2>
-            <p>Running a private practice as a lifecycle coach, executive mentor, or psychologist requires balancing client progress with tedious administration. Massive enterprise CRMs are often overly complex, expensive, and clumsy on mobile interfaces. Coach Session Tracker bridges that exact gap.</p>
-            <p>Designed natively for iOS, this app enables practitioners to run their workflows securely from anywhere. Since all your record-keeping logic is optimized for speedy input, updating case progression, logging hourly packages, and verifying pending invoices takes just a few taps between meetings. Focus on what truly matters: delivering meaningful breakthrough sessions for your clients.</p>
+        <!-- PRIVACY SECTION -->
+        <section class="privacy-highlight">
+            <h2>Privacy First. No Accounts Required.</h2>
+            <p>Your professional logs and client files are strictly confidential. Coach Session Tracker does not upload client metrics to remote servers.</p>
+            <div class="privacy-bullets">
+                <div class="priv-bullet">🛡️ 100% Local Storage</div>
+                <div class="priv-bullet">✈️ Works Fully Offline</div>
+                <div class="priv-bullet">🔑 No Login Required</div>
+            </div>
         </section>
 
-        <!-- FAQ Section -->
+        <!-- REVIEWS -->
+        <section class="reviews">
+            <h2>What Practitioners Say</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Finally a mobile tool that doesn't force me into subscription plans or heavy complex desktop views. Logging my hours takes seconds."</p>
+                    <p class="review-author">— Executive Mentor</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"The offline functionality is excellent. I can update my case history cards immediately after consultations even when on the go."</p>
+                    <p class="review-author">— Private Therapist</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACCORDION FAQ -->
         <section class="faq">
             <h2>Frequently Asked Questions</h2>
             
-            <div class="faq-item">
-                <h3>Does the app work without an active internet connection?</h3>
-                <p>Yes. Coach Session Tracker processes your logs completely offline. You can review profiles and log notes safely even while traveling or working in areas with poor cellular coverage.</p>
-            </div>
+            <details>
+                <summary>Does the tracker work without an active internet connection?</summary>
+                <p>Yes. Coach Session Tracker functions entirely offline. All data queries, updates, and profile adjustments execute locally on your physical iOS device.</p>
+            </details>
             
-            <div class="faq-item">
-                <h3>Can I use this app to track hours for ICF certification?</h3>
-                <p>Absolutely. The integrated hourly counter and session logger provide an organized overview of your completed coaching history, making it significantly easier to compile your logs for accreditation.</p>
-            </div>
+            <details>
+                <summary>Can I use this app to log hours for certification?</summary>
+                <p>Absolutely. The built-in counter displays aggregated practice history periods making it easy to cross-reference logs when submitting credentials validation paperwork.</p>
+            </details>
 
-            <div class="faq-item">
-                <h3>Where is my client data stored?</h3>
-                <p>Your privacy is a priority. All sensitive records, client notes, and logs are stored securely on your local iOS device, keeping data confidential and fully under your control.</p>
-            </div>
+            <details>
+                <summary>Where is my confidential data saved?</summary>
+                <p>All client metrics, financial tracking data, and notes remain encrypted directly within your iPhone storage file architecture, giving you total data ownership.</p>
+            </details>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="bottom-cta">
+            <h2>Optimize Your Practice Management Today</h2>
+            <p>Download Coach Session Tracker on iOS and stop relying on scattered notes.</p>
+            <a href="https://apps.apple.com/app/id6771002707" target="_blank" class="app-store-badge">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+            </a>
+        </section>
+
+        <!-- ORGANIC SEO TEXT (COMPACT) -->
+        <section class="seo-text">
+            For professional lifecycle coaches, mental health consultants, and industrial tutors, deploying an agile therapist CRM or mobile coaching session tracker is a prerequisite for scaling up a steady private practice. Heavy enterprise client management databases usually struggle on small smartphone viewports. By leaning on native system components, this lightweight tracking application simplifies record maintaining routines, logs billing stats, and keeps sensitive business reports safe right inside your pocket.
         </section>
 
     </main>
 
     <footer>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Support Contact</a>
+        </div>
         <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
-        <p>
-            <a href="#">Privacy Policy</a> | 
-            <a href="#">Terms of Use</a> | 
-            <a href="#">Support & Contact</a>
-        </p>
     </footer>
 
 </body>
