@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Apple Smart App Banner -->
+    <meta name="apple-itunes-app" content="app-id=6756579159">
+    
+    <title>CropKeeper: Garden Planner — Square Foot Gardening Layout Tool for iOS</title>
+    <meta name="description" content="Plan your backyard garden using the Square Foot Gardening method. Track planting logs, watering schedules, and harvest dates offline on your iPhone.">
+
+    <!-- Open Graph / Telegram / X -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CropKeeper: Garden Planner — Smart Vegetable Layouts">
+    <meta property="og:description" content="Plan your raised beds and track plant growth tracking cycles with ease.">
+    <meta property="og:image" content="images/icon.png">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CropKeeper: Garden Planner",
+      "operatingSystem": "iOS",
+      "applicationCategory": "UtilitiesApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "18"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #f4f7f5;
+            --card-bg: #ffffff;
+            --text-main: #1c2e24;
+            --text-muted: #4a5d51;
+            --accent: #15803d;
+            --accent-hover: #166534;
+            --border-color: #e2e8f0;
+            --hero-gradient: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        header a:hover { color: var(--accent); }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* Травяной Hero-блок */
+        .hero-wrapper {
+            background: var(--hero-gradient);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 0;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .app-icon-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -5px rgba(21, 128, 61, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .app-icon-img:hover { transform: scale(1.04); }
+
+        .hero-text h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; color: #14532d; }
+        
+        .badge-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .stars { color: #16a34a; font-weight: bold; }
+        .divider-dot { color: #cbd5e1; }
+
+        .hero-text p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 24px; max-width: 600px; }
+
+        .app-store-badge img {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .app-store-badge img:hover { transform: scale(1.03); }
+
+        /* Для кого */
+        .target-audience { padding: 50px 0; text-align: center; }
+        .target-audience h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .audience-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .audience-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Скриншоты */
+        .screenshots-section { padding: 40px 0; }
+        .screenshots-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+        .screenshot-wrapper {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+        .screenshot-wrapper:hover { transform: translateY(-4px); }
+        .screenshot-wrapper img { width: 100%; display: block; }
+
+        /* Как это работает */
+        .how-it-works { padding: 50px 0; background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .how-it-works h2 { text-align: center; margin-bottom: 35px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 36px; height: 36px; background: var(--accent); color: white; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 12px; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Функции */
+        .features { padding: 60px 0; }
+        .features h2 { font-size: 1.8rem; margin-bottom: 35px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 10px; display: inline-block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Конфиденциальность */
+        .privacy-highlight { background: #14532d; color: white; padding: 50px; border-radius: 20px; margin: 40px 0; text-align: center; }
+        .privacy-highlight h2 { margin-bottom: 12px; font-size: 1.8rem; }
+        .privacy-highlight p { color: #a7f3d0; max-width: 600px; margin: 0 auto 24px auto; }
+        .privacy-bullets { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .priv-bullet { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.95rem; }
+
+        /* Отзывы */
+        .reviews { padding: 40px 0; }
+        .reviews h2 { text-align: center; margin-bottom: 30px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .review-card { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; }
+        .review-stars { color: #16a34a; margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { italic; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 10px; }
+        .review-author { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+        /* FAQ details */
+        .faq { padding: 40px 0; }
+        .faq h2 { text-align: center; margin-bottom: 30px; }
+        details { background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 12px; padding: 14px 20px; }
+        summary { font-weight: 600; cursor: pointer; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: bold; color: var(--accent); }
+        details[open] summary::after { content: "✕"; }
+        details p { margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Нижний CTA */
+        .bottom-cta { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .bottom-cta h2 { margin-bottom: 10px; }
+        .bottom-cta p { color: var(--text-muted); margin-bottom: 20px; }
+
+        /* Тяжелое SEO для грядок */
+        .seo-text { font-size: 0.85rem; color: #718096; padding: 20px 0; text-align: justify; border-top: 1px solid var(--border-color); line-height: 1.4; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: white; }
+        footer .links { margin-bottom: 15px; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; font-weight: 500; }
+        footer a:hover { color: var(--accent); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; gap: 20px; }
+            .badge-line { justify-content: center; }
+            .privacy-bullets { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../en/">← Portfolio Overview</a>
+        <div style="font-weight: 700; letter-spacing: -0.3px;">CropKeeper: Garden Planner</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-wrapper">
+        <div class="container hero">
+            <img src="images/icon.png" alt="CropKeeper Layout Icon" class="app-icon-img" onerror="this.style.display='none';">
+            <div class="hero-text">
+                <h1>CropKeeper: Garden Planner</h1>
+                <div class="badge-line">
+                    <span class="stars">★★★★★ Smart Grids</span>
+                    <span class="divider-dot">•</span>
+                    <span>Square Foot Gardening</span>
+                    <span class="divider-dot">•</span>
+                    <span>100% Offline Tracker</span>
+                </div>
+                <p>Maximize your harvest using advanced Square Foot Gardening layouts. Plan your companion planting grids, log watering cycles, and track custom seed calendars natively on your iOS device.</p>
+                <a href="https://apps.apple.com/app/id6756579159" target="_blank" class="app-store-badge">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- AUDIENCE -->
+        <section class="target-audience">
+            <h2>The Ultimate Toolkit for Home Gardeners</h2>
+            <div class="audience-tags">
+                <span class="audience-tag">🌱 Urban Homesteaders</span>
+                <span class="audience-tag">🥕 Raised Bed Enthusiasts</span>
+                <span class="audience-tag">🏡 Backyard Growers</span>
+                <span class="audience-tag">📐 Square Foot Gardeners</span>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots-section">
+            <div class="screenshots-gallery">
+                <div class="screenshot-wrapper"><img src="images/screen1.png" alt="Interactive Square Foot Gardening Grid Layout"></div>
+                <div class="screenshot-wrapper"><img src="images/screen2.png" alt="Plant Growth Logs and Watering Calendars"></div>
+                <div class="screenshot-wrapper"><img src="images/screen3.png" alt="Harvest Tracking and Yield Stats"></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>Plan from Seed to Harvest</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Map Your Beds</h3>
+                    <p>Build custom square layouts matching your physical box grids.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Position Crops</h3>
+                    <p>Allocate vegetable varieties based on perfect spacing rules.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Log Care & Watering</h3>
+                    <p>Maintain consistent watering histories and growth stages logs.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h3>Track Harvests</h3>
+                    <p>Record your organic yields, crop dates, and plant performance.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURES -->
+        <section class="features">
+            <h2>Engineered for High-Yield Gardening</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📐</span>
+                    <h3>Interactive Grid Planner</h3>
+                    <p>Ditch messy paper sketches. Design square foot maps where each block holds the exact correct capacity of carrots, tomatoes, or leafy greens.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💧</span>
+                    <h3>Growth & Care Journals</h3>
+                    <p>Track planting dates, log sprouting timelines, set routine irrigation habits, and keep custom records of fertilizers or soil status variations.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>Yield Optimization Logs</h3>
+                    <p>Analyze which sections of your backyard or green raising boxes performed best to optimize next year's crop rotation layouts seamlessly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIVACY HIGHLIGHT -->
+        <section class="privacy-highlight">
+            <h2>Your Garden Data Stays Local. Secure. Private.</h2>
+            <p>CropKeeper respects your privacy. Your homestead layouts, personal soil logs, and backyard maps are handled strictly on your own device.</p>
+            <div class="privacy-bullets">
+                <div class="priv-bullet">🛡️ Local Device Database</div>
+                <div class="priv-bullet">✈️ 100% Offline Access</div>
+                <div class="priv-bullet">❌ No Data Scraping Tracker</div>
+            </div>
+        </section>
+
+        <!-- SOCIAL PROOF -->
+        <section class="reviews">
+            <h2>Loved by Urban Growers</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"The square-foot visual organizer is beautiful and lightning-fast. It completely changed how I organize my 4x4 backyard raised boxes this spring."</p>
+                    <p class="review-author">— Homestead Blogger, Oregon</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"No subscriptions, no cloud account sync required, and works flawlessly when I have zero coverage out in the greenhouse field."</p>
+                    <p class="review-author">— Family Farmer, UK</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <details>
+                <summary>What is the Square Foot Gardening methodology?</summary>
+                <p>It is an intensive planting system where growing space is divided into a 1x1 foot grid. Each square accommodates a specific count of plants (e.g., 1 tomato, 4 lettuces, or 16 carrots) to boost vegetable outputs while conserving water and soil spaces.</p>
+            </details>
+            
+            <details>
+                <summary>Can I manage multiple separate raised beds in the app?</summary>
+                <p>Yes. You can configure multiple layout matrices with custom dimension scales to represent your entire home garden plot map accurately.</p>
+            </details>
+
+            <details>
+                <summary>Does the layout builder need cellular data to work?</summary>
+                <p>No. CropKeeper operates fully offline. Your garden logs, sowing histories, and scheduler items remain fully usable anywhere on your property.</p>
+            </details>
+        </section>
+
+        <!-- CTA BOTTOM -->
+        <section class="bottom-cta">
+            <h2>Ready to Build Your Smart Garden Layout?</h2>
+            <p>Download CropKeeper for iOS and organize your high-yield raised beds today.</p>
+            <a href="https://apps.apple.com/app/id6756579159" target="_blank" class="app-store-badge">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+            </a>
+        </section>
+
+        <!-- ORGANIC SEO OPTIMIZATION FOOTER -->
+        <section class="seo-text">
+            Utilizing a mobile garden planner or digital backyard layout grid builder is crucial for optimizing organic crop rotation cycles and managing intensive vegetable raised beds. By adhering strictly to space allocation and companion configuration algorithms, homestead growers can mitigate insect threats and increase yield logs without commercial additives. CropKeeper serves as a native tracking calendar that puts irrigation management logs and square foot planning metrics instantly into your hands.
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Support Contact</a>
+        </div>
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
