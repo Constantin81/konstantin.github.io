@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Apple Smart App Banner -->
+    <meta name="apple-itunes-app" content="app-id=6771002707">
+    
+    <title>Coach Session Tracker — Client Management & Session Log for iOS</title>
+    <meta name="description" content="A lightweight CRM and session logger designed for coaches, psychologists, and mentors. Track client hours, log history, and manage payments easily on your iPhone.">
+    
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --border-color: #e2e8f0;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; }
+        .back-link { display: flex; align-items: center; gap: 8px; }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .app-icon-large {
+            width: 120px;
+            height: 120px;
+            background-color: #e0f2fe;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            flex-shrink: 0;
+        }
+
+        .hero-text h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
+        .hero-text p { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; }
+
+        .btn-download {
+            display: inline-block;
+            background-color: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        .btn-download:hover { background-color: #0f172a; }
+
+        .features { padding: 60px 0; }
+        .features h2 { font-size: 1.75rem; margin-bottom: 30px; text-align: center; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .feature-card h3 { margin-bottom: 10px; color: var(--accent); }
+
+        .seo-text-block {
+            background-color: #edf2f7;
+            padding: 40px;
+            border-radius: 16px;
+            margin: 40px 0;
+        }
+        .seo-text-block h2 { margin-bottom: 15px; font-size: 1.5rem; }
+        .seo-text-block p { margin-bottom: 15px; color: var(--text-muted); }
+
+        .faq { padding: 40px 0; }
+        .faq h2 { text-align: center; margin-bottom: 30px; }
+        .faq-item { margin-bottom: 20px; background: white; padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .faq-item h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-main); }
+        .faq-item p { color: var(--text-muted); }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: white;
+            margin-top: 60px;
+        }
+        footer a { color: var(--accent); text-decoration: none; margin: 0 10px; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; gap: 20px; }
+            .hero-text h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../en/" class="back-link">← Portfolio Overview</a>
+        <div>Coach Session Tracker</div>
+    </header>
+
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="app-icon-large">👥</div>
+            <div class="hero-text">
+                <h1>Coach Session Tracker</h1>
+                <p>The streamlined client logging and management tool built specifically for professional coaches, mentors, therapists, and private consultants.</p>
+                <a href="https://apps.apple.com/US/app/id6771002707" target="_blank" class="btn-download">Download on the App Store</a>
+            </div>
+        </section>
+
+        <!-- Key Features -->
+        <section class="features">
+            <h2>Why Choose Coach Session Tracker?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Simplified Client Cards</h3>
+                    <p>Keep essential details, goal tracking, personal notes, and payment histories structured inside neat, standalone client cards.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Intuitive Session Logger</h3>
+                    <p>Log hours, dates, topics discussed, and future action items right during or immediately after your consulting sessions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Hours & Income Analytics</h3>
+                    <p>Visualize your busy periods, track your accumulated coaching hours for credentials (like ICF log requirements), and oversee monthly revenue.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEO Deep Dive Text Block -->
+        <section class="seo-text-block">
+            <h2>Effortless Practice Management for Solo Practitioners</h2>
+            <p>Running a private practice as a lifecycle coach, executive mentor, or psychologist requires balancing client progress with tedious administration. Massive enterprise CRMs are often overly complex, expensive, and clumsy on mobile interfaces. Coach Session Tracker bridges that exact gap.</p>
+            <p>Designed natively for iOS, this app enables practitioners to run their workflows securely from anywhere. Since all your record-keeping logic is optimized for speedy input, updating case progression, logging hourly packages, and verifying pending invoices takes just a few taps between meetings. Focus on what truly matters: delivering meaningful breakthrough sessions for your clients.</p>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h3>Does the app work without an active internet connection?</h3>
+                <p>Yes. Coach Session Tracker processes your logs completely offline. You can review profiles and log notes safely even while traveling or working in areas with poor cellular coverage.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can I use this app to track hours for ICF certification?</h3>
+                <p>Absolutely. The integrated hourly counter and session logger provide an organized overview of your completed coaching history, making it significantly easier to compile your logs for accreditation.</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Where is my client data stored?</h3>
+                <p>Your privacy is a priority. All sensitive records, client notes, and logs are stored securely on your local iOS device, keeping data confidential and fully under your control.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">Terms of Use</a> | 
+            <a href="#">Support & Contact</a>
+        </p>
+    </footer>
+
+</body>
+</html>
