@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Apple Smart App Banner -->
+    <meta name="apple-itunes-app" content="app-id=6741123910">
+    
+    <title>Roll Length Calc — Continuous Material & Roll Diameter Calculator for iOS</title>
+    <meta name="description" content="Calculate remaining material length from roll diameter instantly. Perfect for paper, film, foil, and textiles. Accurate offline industrial engineering tool for iPhone.">
+
+    <!-- Open Graph / Telegram / X -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Roll Length Calc — Industrial Roll Calculator">
+    <meta property="og:description" content="Instant thickness, weight, and material length calculations from roll dimensions.">
+    <meta property="og:image" content="images/icon.png">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Roll Length Calc",
+      "operatingSystem": "iOS",
+      "applicationCategory": "UtilitiesApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "15"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --border-color: #cbd5e1;
+            --hero-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        header a:hover { color: var(--accent); }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* Индустриальный Hero-блок */
+        .hero-wrapper {
+            background: var(--hero-gradient);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 0;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .app-icon-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .app-icon-img:hover { transform: scale(1.04); }
+
+        .hero-text h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; color: #1e293b; }
+        
+        .badge-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .stars { color: var(--accent); font-weight: bold; }
+        .divider-dot { color: #94a3b8; }
+
+        .hero-text p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 24px; max-width: 600px; }
+
+        .app-store-badge img {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .app-store-badge img:hover { transform: scale(1.03); }
+
+        /* Для кого */
+        .target-audience { padding: 50px 0; text-align: center; }
+        .target-audience h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .audience-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .audience-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Скриншоты */
+        .screenshots-section { padding: 40px 0; }
+        .screenshots-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+        .screenshot-wrapper {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+        .screenshot-wrapper:hover { transform: translateY(-4px); }
+        .screenshot-wrapper img { width: 100%; display: block; }
+
+        /* Как это работает */
+        .how-it-works { padding: 50px 0; background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .how-it-works h2 { text-align: center; margin-bottom: 35px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 36px; height: 36px; background: #334155; color: white; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 12px; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Особенности */
+        .features { padding: 60px 0; }
+        .features h2 { font-size: 1.8rem; margin-bottom: 35px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 10px; display: inline-block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Конфиденциальность / Офлайн */
+        .privacy-highlight { background: #1e293b; color: white; padding: 50px; border-radius: 20px; margin: 40px 0; text-align: center; }
+        .privacy-highlight h2 { margin-bottom: 12px; font-size: 1.8rem; }
+        .privacy-highlight p { color: #94a3b8; max-width: 600px; margin: 0 auto 24px auto; }
+        .privacy-bullets { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .priv-bullet { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.95rem; }
+
+        /* Отзывы */
+        .reviews { padding: 40px 0; }
+        .reviews h2 { text-align: center; margin-bottom: 30px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .review-card { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; }
+        .review-stars { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { italic; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 10px; }
+        .review-author { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+        /* FAQ details */
+        .faq { padding: 40px 0; }
+        .faq h2 { text-align: center; margin-bottom: 30px; }
+        details { background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 12px; padding: 14px 20px; }
+        summary { font-weight: 600; cursor: pointer; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: bold; color: var(--accent); }
+        details[open] summary::after { content: "✕"; }
+        details p { margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Нижний CTA */
+        .bottom-cta { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .bottom-cta h2 { margin-bottom: 10px; }
+        .bottom-cta p { color: var(--text-muted); margin-bottom: 20px; }
+
+        /* SEO блок */
+        .seo-text { font-size: 0.85rem; color: #64748b; padding: 20px 0; text-align: justify; border-top: 1px solid var(--border-color); line-height: 1.4; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: white; }
+        footer .links { margin-bottom: 15px; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; font-weight: 500; }
+        footer a:hover { color: var(--accent); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; gap: 20px; }
+            .badge-line { justify-content: center; }
+            .privacy-bullets { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../en/">← Portfolio Overview</a>
+        <div style="font-weight: 700; letter-spacing: -0.3px;">Roll Length Calc</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-wrapper">
+        <div class="container hero">
+            <img src="images/icon.png" alt="Roll Length Calc Icon" class="app-icon-img" onerror="this.style.display='none';">
+            <div class="hero-text">
+                <h1>Roll Length Calc</h1>
+                <div class="badge-line">
+                    <span class="stars">★★★★★ Shop-Floor Tool</span>
+                    <span class="divider-dot">•</span>
+                    <span>Industrial Estimator</span>
+                    <span class="divider-dot">•</span>
+                    <span>Fast Offline Utility</span>
+                </div>
+                <p>Calculate material length, total weight, and outer diameter measurements for any rolled substrate. An essential, high-precision industrial calculator designed for manufacturing, printing, and inventory logs.</p>
+                <a href="https://apps.apple.com/app/id6741123910" target="_blank" class="app-store-badge">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- AUDIENCE -->
+        <section class="target-audience">
+            <h2>Built for On-Site Technical Operations</h2>
+            <div class="audience-tags">
+                <span class="audience-tag">🏭 Warehouse Managers</span>
+                <span class="audience-tag">🖨️ Flexographic Printers</span>
+                <span class="audience-tag">📦 Packaging Engineers</span>
+                <span class="audience-tag">🧵 Textile Manufacturers</span>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots-section">
+            <div class="screenshots-gallery">
+                <div class="screenshot-wrapper"><img src="images/screen1.png" alt="Roll Length Calculation by Outer Diameter"></div>
+                <div class="screenshot-wrapper"><img src="images/screen2.png" alt="Substrate Core and Density Configuration"></div>
+                <div class="screenshot-wrapper"><img src="images/screen3.png" alt="Calculation History Log Summary"></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>Three-Step Instant Geometry Calculations</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Input Core Dimensions</h3>
+                    <p>Enter the outer diameter, inner core core specs, and material thickness.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Execute Formulas</h3>
+                    <p>The app applies precise architectural spiral roll calculations automatically.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Get Weight & Length</h3>
+                    <p>Instantly evaluate run lengths or roll weight stats on the spot.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURES -->
+        <section class="features">
+            <h2>No Fluff. Just Precise Engineering Math.</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📐</span>
+                    <h3>Diameter to Length</h3>
+                    <p>Determine exactly how many linear meters or feet remain on a partially used core spool without unwinding or manual scaling attempts.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚖️</span>
+                    <h3>Mass & Density Scaling</h3>
+                    <p>Incorporate density values for plastics, paperboards, steel foils, and laminates to accurately evaluate shipment weights and logistics metrics.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💾</span>
+                    <h3>Quick-Save Templates</h3>
+                    <p>Store your frequent material specifications (like 50-micron poly film or 120gsm paper stock cores) to recall presets with a single tap.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIVACY HIGHLIGHT -->
+        <section class="privacy-highlight">
+            <h2>Zero Network Dependancy. Operational Anywhere.</h2>
+            <p>Production environments can have terrible reception. Roll Length Calc operates fully locally, requiring no login or background tracking processes.</p>
+            <div class="privacy-bullets">
+                <div class="priv-bullet">🔌 100% Standalone Offline Code</div>
+                <div class="priv-bullet">🔒 Zero Production Logs Transmitted</div>
+                <div class="priv-bullet">⚡ Lightning-Fast Startup Times</div>
+            </div>
+        </section>
+
+        <!-- SOCIAL PROOF -->
+        <section class="reviews">
+            <h2>Trusted on the Factory Floor</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Saves me ten minutes on every stock check query. The spiral calculus math matches our mechanical measurement sensors perfectly."</p>
+                    <p class="review-author">— Printing Shop Supervisor</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Brilliant utility layout for inventory operators. No ads, simple UI dials, and works deep inside our concrete structural storage complexes."</p>
+                    <p class="review-author">— Supply Chain Lead</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <details>
+                <summary>How does the application calculate precise material length?</summary>
+                <p>The calculation engine leverages standard engineering spiral thickness models, processing outer diameter, internal core support radius, and item layer thickness gauges to derive length values.</p>
+            </details>
+            
+            <details>
+                <summary>Does the calculator support both Metric and Imperial configurations?</summary>
+                <p>Yes. You can switch fluidly between millimeters, meters, and kilograms, or inches, feet, and pounds depending on your local factory tracking conventions.</p>
+            </details>
+
+            <details>
+                <summary>Can I estimate the weight of a roll if I only know its material type?</summary>
+                <p>If you have the material's structural density metric or overall thickness gauges, the algorithm can approximate total package weight dimensions seamlessly.</p>
+            </details>
+        </section>
+
+        <!-- CTA BOTTOM -->
+        <section class="bottom-cta">
+            <h2>Streamline Your Inventory Verification Tasks</h2>
+            <p>Download Roll Length Calc for iOS and get precise estimates instantly.</p>
+            <a href="https://apps.apple.com/app/id6741123910" target="_blank" class="app-store-badge">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+            </a>
+        </section>
+
+        <!-- ORGANIC SEO FOOTER -->
+        <section class="seo-text">
+            Using a digital roll length calculator or automatic core diameter calculator is an essential process for eliminating raw material waste logs during complex manufacturing setups. By crunching accurate spiral geometry formulas, engineering staff can evaluate film yards, sheet weight, and textile roll inventory records without relying on uncoiling hardware systems. Roll Length Calc offers a mobile tool focused on providing fast formulas to logistics professionals directly on factory floors.
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Support Contact</a>
+        </div>
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
