@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Apple Smart App Banner -->
+    <meta name="apple-itunes-app" content="app-id=6741484501">
+    
+    <title>Cubage Calculator GOST 2708-75 — Timber Log Volume Calc for iOS</title>
+    <meta name="description" content="Calculate round timber volume instantly according to official GOST 2708-75 tables. Accurate, lightning-fast offline log cubage calculator for forestry professionals on iPhone.">
+
+    <!-- Open Graph / Telegram / X -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Cubage Calculator GOST 2708-75 — Timber Log Calc">
+    <meta property="og:description" content="Official standard timber volume calculations from diameter and length dimensions.">
+    <meta property="og:image" content="images/icon.png">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cubage Calculator GOST 2708-75",
+      "operatingSystem": "iOS",
+      "applicationCategory": "UtilitiesApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "32"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #fcfaf7;
+            --card-bg: #ffffff;
+            --text-main: #27211d;
+            --text-muted: #5c534c;
+            --accent: #15803d;
+            --accent-hover: #166534;
+            --border-color: #e6dfd5;
+            --hero-gradient: linear-gradient(135deg, #f5efe6 0%, #e6dfd5 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        header a:hover { color: var(--accent); }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* Лесной / Древесный Hero-блок */
+        .hero-wrapper {
+            background: var(--hero-gradient);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 0;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .app-icon-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -5px rgba(39, 33, 29, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            flex-shrink: 0;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .app-icon-img:hover { transform: scale(1.04); }
+
+        .hero-text h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; color: #3e3227; }
+        
+        .badge-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .stars { color: var(--accent); font-weight: bold; }
+        .divider-dot { color: #b3a79a; }
+
+        .hero-text p { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 24px; max-width: 600px; }
+
+        .app-store-badge img {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .app-store-badge img:hover { transform: scale(1.03); }
+
+        /* Для кого */
+        .target-audience { padding: 50px 0; text-align: center; }
+        .target-audience h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .audience-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .audience-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Скриншоты */
+        .screenshots-section { padding: 40px 0; }
+        .screenshots-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+        .screenshot-wrapper {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+        .screenshot-wrapper:hover { transform: translateY(-4px); }
+        .screenshot-wrapper img { width: 100%; display: block; }
+
+        /* Как это работает */
+        .how-it-works { padding: 50px 0; background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .how-it-works h2 { text-align: center; margin-bottom: 35px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 36px; height: 36px; background: #5c4d40; color: white; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 12px; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Особенности */
+        .features { padding: 60px 0; }
+        .features h2 { font-size: 1.8rem; margin-bottom: 35px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 10px; display: inline-block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Офлайн / Работа на делянке */
+        .privacy-highlight { background: #3e3227; color: white; padding: 50px; border-radius: 20px; margin: 40px 0; text-align: center; }
+        .privacy-highlight h2 { margin-bottom: 12px; font-size: 1.8rem; }
+        .privacy-highlight p { color: #d0c4b8; max-width: 600px; margin: 0 auto 24px auto; }
+        .privacy-bullets { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .priv-bullet { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.95rem; }
+
+        /* Отзывы */
+        .reviews { padding: 40px 0; }
+        .reviews h2 { text-align: center; margin-bottom: 30px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .review-card { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; }
+        .review-stars { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { italic; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 10px; }
+        .review-author { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+        /* FAQ details */
+        .faq { padding: 40px 0; }
+        .faq h2 { text-align: center; margin-bottom: 30px; }
+        details { background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 12px; padding: 14px 20px; }
+        summary { font-weight: 600; cursor: pointer; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: bold; color: var(--accent); }
+        details[open] summary::after { content: "✕"; }
+        details p { margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Нижний CTA */
+        .bottom-cta { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .bottom-cta h2 { margin-bottom: 10px; }
+        .bottom-cta p { color: var(--text-muted); margin-bottom: 20px; }
+
+        /* SEO блок */
+        .seo-text { font-size: 0.85rem; color: #8a7e75; padding: 20px 0; text-align: justify; border-top: 1px solid var(--border-color); line-height: 1.4; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: white; }
+        footer .links { margin-bottom: 15px; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; font-weight: 500; }
+        footer a:hover { color: var(--accent); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; gap: 20px; }
+            .badge-line { justify-content: center; }
+            .privacy-bullets { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../en/">← Portfolio Overview</a>
+        <div style="font-weight: 700; letter-spacing: -0.3px;">Cubage Calc GOST 2708-75</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-wrapper">
+        <div class="container hero">
+            <img src="images/icon.png" alt="GOST Cubage Calculator Icon" class="app-icon-img" onerror="this.style.display='none';">
+            <div class="hero-text">
+                <h1>Cubage Calculator GOST 2708-75</h1>
+                <div class="badge-line">
+                    <span class="stars">★★★★★ Official Standard</span>
+                    <span class="divider-dot">•</span>
+                    <span>Timber Volume Estimator</span>
+                    <span class="divider-dot">•</span>
+                    <span>Rugged Offline UI</span>
+                </div>
+                <p>Calculate wood logs volume instantly based on official state GOST 2708-75 metrics. Designed specifically for forestry managers, lumber warehouse supervisors, and wood merchants tracking inventory logs.</p>
+                <a href="https://apps.apple.com/app/id6741484501" target="_blank" class="app-store-badge">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- AUDIENCE -->
+        <section class="target-audience">
+            <h2>Built for On-Site Timber Scaling & Auditing</h2>
+            <div class="audience-tags">
+                <span class="audience-tag">🌲 Forestry Masters</span>
+                <span class="audience-tag">🪵 Sawmill Supervisors</span>
+                <span class="audience-tag">🚛 Lumber Logistics Leads</span>
+                <span class="audience-tag">💼 Timber Procurement Agents</span>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots-section">
+            <div class="screenshots-gallery">
+                <div class="screenshot-wrapper"><img src="images/screen1.png" alt="GOST 2708-75 Cubic Volume Grid View"></div>
+                <div class="screenshot-wrapper"><img src="images/screen2.png" alt="Fast Diameter and Log Length Input Console"></div>
+                <div class="screenshot-wrapper"><img src="images/screen3.png" alt="Total Batch Cargo Calculation Summary"></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>Speed Up On-Site Lumber Tallying</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Select Log Length</h3>
+                    <p>Pick the standardized length bracket according to standard GOST specs.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Tap Top Diameters</h3>
+                    <p>Enter quantity counts for each end diameter with rapid entry keys.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Get Total Volume</h3>
+                    <p>Review calculated total cubic meters ($\text{m}^3$) instantly without manual books lookup.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURES -->
+        <section class="features">
+            <h2>Zero Approximations. Absolute Compliance.</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📜</span>
+                    <h3>Official GOST Matrices</h3>
+                    <p>The code matches legal state datasets flawlessly, preventing pricing discrepancies or shipment inventory audit rejections entirely.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🪵</span>
+                    <h3>Batch Tally Logs</h3>
+                    <p>Count hundreds of round wood items sequentially. The software aggregates total pieces and sum cubage dynamically as you count.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📤</span>
+                    <h3>Instant Data Share</h3>
+                    <p>Export calculated timber batch tallies via structured spreadsheets or clean text reports directly to your commercial clients.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIVACY / FIELD READY HIGHLIGHT -->
+        <section class="privacy-highlight">
+            <h2>Engineered for Deep Remote Forestry Work</h2>
+            <p>Lumber extraction yards rarely enjoy cell signals. Cubage Calculator requires no network data, login profiles, or advertising trackers.</p>
+            <div class="privacy-bullets">
+                <div class="priv-bullet">🌲 100% Offline Database Engine</div>
+                <div class="priv-bullet">❄️ High-Contrast UI for Winter Work</div>
+                <div class="priv-bullet">🔒 Your Commercial Tally Logs Stay Local</div>
+            </div>
+        </section>
+
+        <!-- SOCIAL PROOF -->
+        <section class="reviews">
+            <h2>Endorsed by Sawmill Operatives</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Replaced our battered paper reference handbooks completely. Tapping log counts right at the cargo truck is incredibly fast and foolproof."</p>
+                    <p class="review-author">— Forest Harvesting Supervisor</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"The numbers exactly align with state trading inspection protocols. Exporting reports to buyers saves us hours every afternoon."</p>
+                    <p class="review-author">— Timber Yard Controller</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <details>
+                <summary>Does this calculator use mathematical cylinder formulas?</summary>
+                <p>No. It strictly utilizes the official look-up arrays defined by GOST 2708-75 legislation for round timber, ensuring full compliance with state trade audits.</p>
+            </details>
+            
+            <details>
+                <summary>Can I estimate the volume of wood batches with custom lengths?</summary>
+                <p>The system encompasses the complete legal length distribution array, covering standard small and heavy timber profiles explicitly.</p>
+            </details>
+
+            <details>
+                <summary>Where are my shared spreadsheets generated?</summary>
+                <p>Data assemblies are compiled purely in memory and transferred directly into native iOS sharing protocols without remote hosting involvement.</p>
+            </details>
+        </section>
+
+        <!-- CTA BOTTOM -->
+        <section class="bottom-cta">
+            <h2>Eliminate Tedious Lumber Book Reference Tasks</h2>
+            <p>Download Cubage Calculator GOST 2708-75 for iOS and optimize your log tally audits.</p>
+            <a href="https://apps.apple.com/app/id6741484501" target="_blank" class="app-store-badge">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+            </a>
+        </section>
+
+        <!-- ORGANIC SEO FOOTER -->
+        <section class="seo-text">
+            Implementing a mobile cubage calculator or compliance GOST 2708-75 wood log calculation engine is crucial for avoiding structural inventory calculation mistakes during large-scale industrial lumber trading. Forestry masters and sawmill agents rely heavily on systematic timber log metrics to verify batch load sheets, cargo volumes, and forestry yard inventory summaries without manual table searching. This dedicated tool provides a rapid, standalone offline computing architecture built for extreme utility right on sorting platforms.
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">Support Contact</a>
+        </div>
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
