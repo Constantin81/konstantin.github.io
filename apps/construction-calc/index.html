@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Apple Smart App Banner -->
+    <meta name="apple-itunes-app" content="app-id=6755724882">
+    
+    <title>Construction Calc: Estimator — Materials & Cost Calculator for iOS</title>
+    <meta name="description" content="Calculate concrete, brickwork, roofing, and flooring materials accurately with Construction Calc: Estimator. Eliminate guesswork, estimate costs, and export clean line-item quotes on iPhone.">
+
+    <!-- Open Graph / Telegram / X -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Construction Calc: Estimator — Build with Accuracy">
+    <meta property="og:description" content="Instant volume, material, and financial estimation algorithms for site managers and DIY renovators.">
+    <meta property="og:image" content="images/icon.png">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <!-- Structured Data (JSON-LD) for Google -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Construction Calc: Estimator",
+      "operatingSystem": "iOS",
+      "applicationCategory": "UtilitiesApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "41"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <style>
+        :root {
+            --bg-color: #f4f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --dark-industrial: #0f172a;
+            --border-color: #e2e8f0;
+            --hero-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header a { color: var(--text-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+        header a:hover { color: var(--dark-industrial); }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* Строгий Индустриальный Hero-блок */
+        .hero-wrapper {
+            background: var(--hero-gradient);
+            border-bottom: 1px solid var(--border-color);
+            padding: 50px 0;
+        }
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        .app-icon-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 30px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .app-icon-img:hover { transform: scale(1.03); }
+
+        .hero-text h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.5px; color: #ffffff; }
+        
+        .badge-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .stars { color: var(--accent); font-weight: bold; }
+        .divider-dot { color: #334155; }
+
+        .hero-text p { font-size: 1.15rem; color: #cbd5e1; margin-bottom: 24px; max-width: 600px; }
+
+        .app-store-badge img {
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+        .app-store-badge img:hover { transform: scale(1.03); }
+
+        /* Категории расчетов */
+        .target-audience { padding: 50px 0; text-align: center; }
+        .target-audience h2 { font-size: 1.8rem; margin-bottom: 25px; }
+        .audience-tags { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .audience-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #334155;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        /* Скриншоты */
+        .screenshots-section { padding: 40px 0; }
+        .screenshots-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+        }
+        .screenshot-wrapper {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+        .screenshot-wrapper:hover { transform: translateY(-4px); }
+        .screenshot-wrapper img { width: 100%; display: block; }
+
+        /* Как это устроено */
+        .how-it-works { padding: 50px 0; background: white; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .how-it-works h2 { text-align: center; margin-bottom: 35px; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .step-card { text-align: center; position: relative; }
+        .step-num { width: 36px; height: 36px; background: var(--dark-industrial); color: white; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; margin-bottom: 12px; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+        .step-card p { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* Особенности */
+        .features { padding: 60px 0; }
+        .features h2 { font-size: 1.8rem; margin-bottom: 35px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+        .feature-icon { font-size: 1.5rem; margin-bottom: 10px; display: inline-block; }
+        .feature-card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* На делянке / В поле */
+        .privacy-highlight { background: #1e293b; color: white; padding: 50px; border-radius: 20px; margin: 40px 0; text-align: center; border: 1px solid #334155; }
+        .privacy-highlight h2 { margin-bottom: 12px; font-size: 1.8rem; }
+        .privacy-highlight p { color: #94a3b8; max-width: 600px; margin: 0 auto 24px auto; }
+        .privacy-bullets { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+        .priv-bullet { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 0.95rem; color: #f8fafc; }
+
+        /* Отзывы */
+        .reviews { padding: 40px 0; }
+        .reviews h2 { text-align: center; margin-bottom: 30px; }
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .review-card { background: white; border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; }
+        .review-stars { color: var(--accent); margin-bottom: 8px; font-size: 0.9rem; }
+        .review-text { italic; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 10px; }
+        .review-author { font-size: 0.85rem; font-weight: bold; color: var(--text-main); }
+
+        /* FAQ */
+        .faq { padding: 40px 0; }
+        .faq h2 { text-align: center; margin-bottom: 30px; }
+        details { background: white; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 12px; padding: 14px 20px; }
+        summary { font-weight: 600; cursor: pointer; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+        summary::-webkit-details-marker { display: none; }
+        summary::after { content: "＋"; font-weight: bold; color: var(--accent); }
+        details[open] summary::after { content: "✕"; }
+        details p { margin-top: 10px; color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Нижний CTA */
+        .bottom-cta { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .bottom-cta h2 { margin-bottom: 10px; }
+        .bottom-cta p { color: var(--text-muted); margin-bottom: 20px; }
+
+        /* SEO блок */
+        .seo-text { font-size: 0.85rem; color: #64748b; padding: 20px 0; text-align: justify; border-top: 1px solid var(--border-color); line-height: 1.4; }
+
+        footer { border-top: 1px solid var(--border-color); padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.9rem; background: white; }
+        footer .links { margin-bottom: 15px; }
+        footer a { color: var(--text-muted); text-decoration: none; margin: 0 10px; font-weight: 500; }
+        footer a:hover { color: var(--dark-industrial); text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero { flex-direction: column; text-align: center; gap: 20px; }
+            .badge-line { justify-content: center; }
+            .privacy-bullets { flex-direction: column; gap: 12px; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="../../en/">← Portfolio Overview</a>
+        <div style="font-weight: 700; letter-spacing: -0.3px;">Construction Calc</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-wrapper">
+        <div class="container hero">
+            <img src="images/icon.png" alt="Construction Calc Icon" class="app-icon-img" onerror="this.style.display='none';">
+            <div class="hero-text">
+                <h1>Construction Calc: Estimator</h1>
+                <div class="badge-line">
+                    <span class="stars">★★★★★ Site Ready</span>
+                    <span class="divider-dot">•</span>
+                    <span>Material Estimator</span>
+                    <span class="divider-dot">•</span>
+                    <span>Instant Quotes Export</span>
+                </div>
+                <p>Take the complexity out of building estimations. Calculate concrete volumes, brickwork layouts, square footage requirements, and financial cost breakdowns instantly with a highly optimized mobile toolbox built for the field.</p>
+                <a href="https://apps.apple.com/app/id6755724882" target="_blank" class="app-store-badge">
+                    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        
+        <!-- CALCULATION TARGETS -->
+        <section class="target-audience">
+            <h2>Comprehensive Calculation Engines In Your Pocket</h2>
+            <div class="audience-tags">
+                <span class="audience-tag">🏗️ Concrete & Foundations</span>
+                <span class="audience-tag">🧱 Brick & Block Masonry</span>
+                <span class="audience-tag">📐 Drywall & Plastering</span>
+                <span class="audience-tag">🪵 Roofing & Deck Frame Layouts</span>
+            </div>
+        </section>
+
+        <!-- SCREENSHOTS -->
+        <section class="screenshots-section">
+            <div class="screenshots-gallery">
+                <div class="screenshot-wrapper"><img src="images/screen1.png" alt="Construction Material Category Dashboard View"></div>
+                <div class="screenshot-wrapper"><img src="images/screen2.png" alt="Advanced Dimension Input and Instant Quantity Calculation"></div>
+                <div class="screenshot-wrapper"><img src="images/screen3.png" alt="Line Item Cost Sheet and Export Document View"></div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="how-it-works">
+            <h2>Draft Structural Estimates Instantly</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h3>Pick Material Class</h3>
+                    <p>Select your targeted structural sector—from concrete slabs to brickwork volumes.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h3>Feed Local Metrics</h3>
+                    <p>Input length, height, or spacing values using our specialized decimal keyboard layout.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h3>Compile Cost Sheets</h3>
+                    <p>Review necessary physical volumes, set local material prices, and generate professional quotes.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE FEATURES -->
+        <section class="features">
+            <h2>Prevent Shortages. Control Procurement Costs.</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">📐</span>
+                    <h3>Waste Margin Tuning</h3>
+                    <p>Apply realistic structural waste percentage adjustments to your counts, saving you from mid-project delivery lags or costly reorders.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💰</span>
+                    <h3>Integrated Budgeting</h3>
+                    <p>Bind price nodes directly to volume units. Instantly shift parameters to balance material quality against financial limitations.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">📤</span>
+                    <h3>Clean Field Dispatches</h3>
+                    <p>Bundle calculated material lists into systematic data frames. Forward them instantly via messaging tools directly to suppliers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FIELD READY HIGHLIGHT -->
+        <section class="privacy-highlight">
+            <h2>Zero Network Dependability Needed On Excavation Sites</h2>
+            <p>Remote layouts and early-stage concrete pours often have no cell reception. Construction Calc processes everything raw on-chip without cloud delays.</p>
+            <div class="privacy-bullets">
+                <div class="priv-bullet">📴 100% Offline Computing Architecture</div>
+                <div class="priv-bullet">☀️ High-Contrast Outdoors Screen Optimization</div>
+                <div class="priv-bullet">🛡️ Strict Local Sandbox Storage Policies</div>
+            </div>
+        </section>
+
+        <!-- SOCIAL PROOF -->
+        <section class="reviews">
+            <h2>Trusted by Field General Contractors</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Saves me from drafting estimates on scrap plywood. The brickwork and concrete slab calculators match our ordering specs down to the unit."</p>
+                    <p class="review-author">— Site Manager & Superintendent</p>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Extremely straightforward layout without subscription blocks or intrusive ads. Perfect tool for mapping out our house renovation costs."</p>
+                    <p class="review-author">— DIY Homeowner Developer</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION -->
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <details>
+                <summary>Does this tool manage both metric and imperial measurements?</summary>
+                <p>Yes. The calculations support quick unit configuration adjustments, processing yards, meters, inches, or centimeters interchangeably depending on localized blueprint needs.</p>
+            </details>
+            
+            <details>
+                <summary>Can I catalog multiple independent material sectors inside one estimate?</summary>
+                <p>The calculation matrices evaluate items granularly by project component, giving you clear individual readouts for different sections of the layout.</p>
+            </details>
+
+            <details>
+                <summary>Are my localized unit pricing metrics safe?</summary>
+                <p>Absolutely. Price allocations are cached entirely inside local storage configurations and never uploaded to external monitoring platforms.</p>
+            </details>
+        </section>
+
+        <!-- CTA BOTTOM -->
+        <section class="bottom-cta">
+            <h2>Stop Guessing Material Loads. Calculate with Certainty.</h2>
+            <p>Download Construction Calc: Estimator for iOS and streamline your build specifications.</p>
+            <a href="https://apps.apple.com/app/id6755724882" target="_blank" class="app-store-badge">
+                <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83" alt="Download on the App Store">
+            </a>
+        </section>
+
+        <!-- ORGANIC SEO FOOTER -->
+        <section class="seo-text">
+            Adopting a modern construction calculator or mobile materials estimator engine is a vital workflow for minimizing procurement errors in commercial contracting. By computing precise concrete volumes, wall surface requirements, and framing structures with automated tools, building supervisors can control operational expenditures and present accurate line-item pricing. This dedicated offline platform delivers instant structural calculation scripts designed for high-efficiency project management on modern build venues.
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Support Channels</a>
+        </div>
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
