@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Константин Хорошун — iOS Разработчик | Мобильные приложения и игры</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent: #2b6cb0;
+            --accent-hover: #1a5276;
+            --border-color: #e2e8f0;
+            --tag-bg: #edf2f7;
+            --tag-text: #4a5568;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .lang-switch {
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #ffffff 0%, var(--bg-color) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 24px auto;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 4px 0 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            background-color: #edf2f7;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .app-title-block h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .app-category {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .app-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #333333;
+        }
+
+        .btn-secondary {
+            background-color: #f7fafc;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #edf2f7;
+        }
+
+        footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Простая фильтрация на чистом JS */
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            nav {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                margin-left: 0;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand">Константин Хорошун</a>
+        <nav>
+            <a href="#" class="active">Приложения</a>
+            <a href="#about">О разработчике</a>
+            <a href="#" class="lang-switch">EN</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Полезные утилиты, планировщики и мобильные игры для iOS</h1>
+            <p>Портфолио независимого разработчика. Создаю продуманные инструменты для работы, производства, повседневных задач и отдыха.</p>
+            
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="filterCategory('all')">Все (9)</button>
+                <button class="tab-btn" onclick="filterCategory('utility')">Утилиты и Калькуляторы</button>
+                <button class="tab-btn" onclick="filterCategory('planner')">Планировщики</button>
+                <button class="tab-btn" onclick="filterCategory('education')">Обучение</button>
+                <button class="tab-btn" onclick="filterCategory('game')">Игры</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="apps-grid" id="apps-container">
+            
+            <!-- 1. Кубатурник -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🪵</div>
+                        <div class="app-title-block">
+                            <h3>Кубатурник ГОСТ 2708-75: Лес</h3>
+                            <div class="app-category">Утилита</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Профессиональный калькулятор для точного расчета объема круглого леса и пиломатериалов по официальным стандартам ГОСТ. Быстрый подсчет прямо на лесозаготовке без интернета.</p>
+                    <div class="app-tags">
+                        <span class="tag">ГОСТ 2708-75</span>
+                        <span class="tag">Лесозаготовка</span>
+                        <span class="tag">Калькулятор объема</span>
+                        <span class="tag">Офлайн</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id1480583177" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 2. Roll Length Calc -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📜</div>
+                        <div class="app-title-block">
+                            <h3>Roll Length Calc</h3>
+                            <div class="app-category">Утилита</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Быстрый расчет длины материала в рулоне по внешнему и внутреннему диаметру и толщине. Незаменимый инструмент для производства, логистики, склада и торговли.</p>
+                    <div class="app-tags">
+                        <span class="tag">Рулоны</span>
+                        <span class="tag">Расчет длины</span>
+                        <span class="tag">Производство</span>
+                        <span class="tag">Склад</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id6754931640" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 3. Construction Calc: Estimator -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🧱</div>
+                        <div class="app-title-block">
+                            <h3>Construction Calc: Estimator</h3>
+                            <div class="app-category">Утилита</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Строительный калькулятор для точной оценки материалов и стоимости работ. Рассчитывайте кирпич, бетон, кровлю, объемы смесей и составляйте сметы за пару минут.</p>
+                    <div class="app-tags">
+                        <span class="tag">Строительство</span>
+                        <span class="tag">Смета</span>
+                        <span class="tag">Расход материалов</span>
+                        <span class="tag">Калькулятор</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id6755724882" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 4. Coach Session Tracker -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">👥</div>
+                        <div class="app-title-block">
+                            <h3>Coach Session Tracker</h3>
+                            <div class="app-category">Утилита</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Специализированный инструмент для коучей, психологов и консультантов. Удобный учет проведенных сессий, фиксация прогресса клиентов, расписание и аналитика занятости.</p>
+                    <div class="app-tags">
+                        <span class="tag">CRM для коучей</span>
+                        <span class="tag">Сессии</span>
+                        <span class="tag">Учет клиентов</span>
+                        <span class="tag">Продуктивность</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id6771002707" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 5. Day Planner – Daily Schedule -->
+            <div class="app-card" data-category="planner">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📅</div>
+                        <div class="app-title-block">
+                            <h3>Day Planner – Daily Schedule</h3>
+                            <div class="app-category">Планировщик</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Минималистичный и эффективный планировщик дня для управления временем. Фокусируйтесь на главных задачах, ведите четкое расписание и повышайте личную продуктивность без лишнего шума.</p>
+                    <div class="app-tags">
+                        <span class="tag">Тайм-менеджмент</span>
+                        <span class="tag">Расписание</span>
+                        <span class="tag">Списки дел</span>
+                        <span class="tag">Focus</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id1588633445" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 6. CropKeeper: Garden Planner -->
+            <div class="app-card" data-category="planner">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🌱</div>
+                        <div class="app-title-block">
+                            <h3>CropKeeper: Garden Planner</h3>
+                            <div class="app-category">Планировщик</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Умный планировщик сада и огорода по системе Square Foot Gardening. Отслеживайте графики посадок, полива и ухода, ведите учет сортов и планируйте идеальные грядки.</p>
+                    <div class="app-tags">
+                        <span class="tag">Огородничество</span>
+                        <span class="tag">Календарь посадок</span>
+                        <span class="tag">Сад</span>
+                        <span class="tag">Square Foot</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id6756579159" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 7. Finance Microlessons Daily -->
+            <div class="app-card" data-category="education">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📈</div>
+                        <div class="app-title-block">
+                            <h3>Finance Microlessons Daily</h3>
+                            <div class="app-category">Обучение</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Прокачивайте финансовую грамотность за 5 минут в день. Ежедневные короткие микро-уроки, интерактивные тесты и практические советы для грамотного управления личным бюджетом.</p>
+                    <div class="app-tags">
+                        <span class="tag">Финграмотность</span>
+                        <span class="tag">Микрообучение</span>
+                        <span class="tag">Личные финансы</span>
+                        <span class="tag">Инвестиции</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id64744848395" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 8. Викторина: Битва умов -->
+            <div class="app-card" data-category="game">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🧠</div>
+                        <div class="app-title-block">
+                            <h3>Викторина: Битва умов</h3>
+                            <div class="app-category">Игра</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Интеллектуальная игра-викторина на русском языке. Тысячи увлекательных и каверзных вопросов из самых разных областей знаний для тренировки эрудиции и соревнований.</p>
+                    <div class="app-tags">
+                        <span class="tag">Викторина</span>
+                        <span class="tag">Эрудиция</span>
+                        <span class="tag">Логика</span>
+                        <span class="tag">Умственные игры</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id1510250407" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+            <!-- 9. Kingdom Dice: Board Strategy -->
+            <div class="app-card" data-category="game">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🎲</div>
+                        <div class="app-title-block">
+                            <h3>Kingdom Dice: Board Strategy</h3>
+                            <div class="app-category">Игра</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Настольная пошаговая стратегия, в которой исход битвы и развитие экономики решают кубики и ваш тактический расчет. Развивайте королевство и переиграйте оппонентов.</p>
+                    <div class="app-tags">
+                        <span class="tag">Настольная игра</span>
+                        <span class="tag">Пошаговая стратегия</span>
+                        <span class="tag">Кости</span>
+                        <span class="tag">Тактика</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Подробнее</a>
+                    <a href="https://apps.apple.com/US/app/id6760533329" target="_blank" class="btn btn-primary">В App Store</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="about">
+        <p>&copy; 2026 Константин Хорошун. Все права защищены.</p>
+        <p>Разработка качественных мобильных приложений под iOS.</p>
+        <p>
+            <a href="#">Политика конфиденциальности</a> | 
+            <a href="#">Поддержка пользователей</a>
+        </p>
+    </footer>
+
+    <script>
+        function filterCategory(category) {
+            // Обновляем активный класс кнопки
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Фильтруем карточки
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
