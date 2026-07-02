@@ -50,17 +50,13 @@
             border-bottom: 1px solid var(--border-color);
         }
 
-        .app-icon-large {
+        .app-icon-img {
             width: 120px;
             height: 120px;
-            background-color: #e0f2fe;
             border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             flex-shrink: 0;
+            object-fit: cover;
         }
 
         .hero-text h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-main); }
@@ -77,6 +73,39 @@
             transition: background-color 0.2s;
         }
         .btn-download:hover { background-color: #0f172a; }
+
+        /* Стильная галерея скриншотов */
+        .screenshots-section {
+            padding: 40px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .screenshots-section h2 { font-size: 1.75rem; margin-bottom: 25px; text-align: center; }
+        
+        .screenshots-gallery {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: thin;
+        }
+        .screenshots-gallery::-webkit-scrollbar { height: 6px; }
+        .screenshots-gallery::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
+
+        .screenshot-wrapper {
+            flex: 0 0 240px;
+            scroll-snap-align: start;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-color);
+            background-color: #000;
+        }
+        .screenshot-wrapper img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
 
         .features { padding: 60px 0; }
         .features h2 { font-size: 1.75rem; margin-bottom: 30px; text-align: center; }
@@ -123,6 +152,8 @@
         @media (max-width: 768px) {
             .hero { flex-direction: column; text-align: center; gap: 20px; }
             .hero-text h1 { font-size: 1.8rem; }
+            .screenshots-gallery { gap: 15px; }
+            .screenshot-wrapper { flex: 0 0 200px; }
         }
     </style>
 </head>
@@ -137,11 +168,30 @@
         
         <!-- Hero Section -->
         <section class="hero">
-            <div class="app-icon-large">👥</div>
+            <!-- Подключаем реальную иконку. Если ее нет, покажется альтернативный текст -->
+            <img src="images/icon.png" alt="Coach Session Tracker Icon" class="app-icon-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="app-icon-large" style="display:none;">👥</div>
+            
             <div class="hero-text">
                 <h1>Coach Session Tracker</h1>
                 <p>The streamlined client logging and management tool built specifically for professional coaches, mentors, therapists, and private consultants.</p>
                 <a href="https://apps.apple.com/app/id6771002707" target="_blank" class="btn-download">Download on the App Store</a>
+            </div>
+        </section>
+
+        <!-- Галерея скриншотов приложения -->
+        <section class="screenshots-section">
+            <h2>App Screenshots</h2>
+            <div class="screenshots-gallery">
+                <div class="screenshot-wrapper">
+                    <img src="images/screen1.png" alt="App Screenshot 1">
+                </div>
+                <div class="screenshot-wrapper">
+                    <img src="images/screen2.png" alt="App Screenshot 2">
+                </div>
+                <div class="screenshot-wrapper">
+                    <img src="images/screen3.png" alt="App Screenshot 3">
+                </div>
             </div>
         </section>
 
