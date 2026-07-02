@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constantin Horoshun — iOS Developer | Mobile Apps & Games</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent: #2b6cb0;
+            --accent-hover: #1a5276;
+            --border-color: #e2e8f0;
+            --tag-bg: #edf2f7;
+            --tag-text: #4a5568;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+
+        .lang-switch {
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(180deg, #ffffff 0%, var(--bg-color) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 24px auto;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 4px 0 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .app-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-header {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            background-color: #edf2f7;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .app-title-block h3 {
+            font-size: 1.2rem;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .app-category {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .app-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .app-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        .app-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #333333;
+        }
+
+        .btn-secondary {
+            background-color: #f7fafc;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: #edf2f7;
+        }
+
+        footer {
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            nav {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav a {
+                margin-left: 0;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="brand">Constantin Horoshun</a>
+        <nav>
+            <a href="#" class="active">Apps</a>
+            <a href="#about">About Developer</a>
+            <a href="/" class="lang-switch">RU</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Useful Utilities, Planners & Mobile Games for iOS</h1>
+            <p>Portfolio of an independent developer. Crafting well-thought-out tools for work, production, daily routines, and entertainment.</p>
+            
+            <div class="filter-tabs">
+                <button class="tab-btn active" onclick="filterCategory('all')">All (9)</button>
+                <button class="tab-btn" onclick="filterCategory('utility')">Utilities & Calculators</button>
+                <button class="tab-btn" onclick="filterCategory('planner')">Planners</button>
+                <button class="tab-btn" onclick="filterCategory('education')">Education</button>
+                <button class="tab-btn" onclick="filterCategory('game')">Games</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="apps-grid" id="apps-container">
+            
+            <!-- 1. Кубатурник -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🪵</div>
+                        <div class="app-title-block">
+                            <h3>Timber Volume Calc (GOST)</h3>
+                            <div class="app-category">Utility</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Professional calculator for precise round wood and timber volume estimation based on official state GOST standards. Fast offline calculations right at the logging site. [Available in Russian only]</p>
+                    <div class="app-tags">
+                        <span class="tag">GOST 2708-75</span>
+                        <span class="tag">Logging</span>
+                        <span class="tag">Volume Calculator</span>
+                        <span class="tag">Offline Tool</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id1480583177" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 2. Roll Length Calc -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📜</div>
+                        <div class="app-title-block">
+                            <h3>Roll Length Calc</h3>
+                            <div class="app-category">Utility</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Instantly calculate the length of material rolled up on a spool based on outer/inner diameter and material thickness. Essential utility for production, logistics, and warehouse management.</p>
+                    <div class="app-tags">
+                        <span class="tag">Rolls</span>
+                        <span class="tag">Length Calc</span>
+                        <span class="tag">Manufacturing</span>
+                        <span class="tag">Warehouse</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id6754931640" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 3. Construction Calc: Estimator -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🧱</div>
+                        <div class="app-title-block">
+                            <h3>Construction Calc: Estimator</h3>
+                            <div class="app-category">Utility</div>
+                        </div>
+                    </div>
+                    <p class="app-description">An advanced on-site building estimator to accurately calculate materials and task costs. Estimate brick count, concrete volume, roofing, and generate summaries in a few clicks.</p>
+                    <div class="app-tags">
+                        <span class="tag">Construction</span>
+                        <span class="tag">Estimating</span>
+                        <span class="tag">Materials Cost</span>
+                        <span class="tag">Calculator</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id6755724882" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 4. Coach Session Tracker -->
+            <div class="app-card" data-category="utility">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">👥</div>
+                        <div class="app-title-block">
+                            <h3>Coach Session Tracker</h3>
+                            <div class="app-category">Utility</div>
+                        </div>
+                    </div>
+                    <p class="app-description">A lightweight CRM tailored specifically for coaches, mentors, and consultants. Keep track of scheduled sessions, log client progress milestones, and review your busy hours analytics.</p>
+                    <div class="app-tags">
+                        <span class="tag">Coach CRM</span>
+                        <span class="tag">Sessions Tracker</span>
+                        <span class="tag">Client Cards</span>
+                        <span class="tag">Productivity</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id6771002707" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 5. Day Planner – Daily Schedule -->
+            <div class="app-card" data-category="planner">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📅</div>
+                        <div class="app-title-block">
+                            <h3>Day Planner – Daily Schedule</h3>
+                            <div class="app-category">Planner</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Minimalist daily schedule planner focusing strictly on time blocking and task management. Concentrate on your core objectives, track schedules, and level up personal efficiency.</p>
+                    <div class="app-tags">
+                        <span class="tag">Time Management</span>
+                        <span class="tag">Time Blocking</span>
+                        <span class="tag">To-Do Lists</span>
+                        <span class="tag">Focus</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id1588633445" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 6. CropKeeper: Garden Planner -->
+            <div class="app-card" data-category="planner">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🌱</div>
+                        <div class="app-title-block">
+                            <h3>CropKeeper: Garden Planner</h3>
+                            <div class="app-category">Planner</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Smart backyard and garden planning layout system based on Square Foot Gardening principles. Track custom planting, watering logs, harvest dates, and manage interactive grids.</p>
+                    <div class="app-tags">
+                        <span class="tag">Gardening Layout</span>
+                        <span class="tag">Planting Logs</span>
+                        <span class="tag">Backyard Planner</span>
+                        <span class="tag">Square Foot</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id6756579159" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 7. Finance Microlessons Daily -->
+            <div class="app-card" data-category="education">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">📈</div>
+                        <div class="app-title-block">
+                            <h3>Finance Microlessons Daily</h3>
+                            <div class="app-category">Education</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Boost your personal financial literacy in just 5 minutes a day. Enjoy short daily microlessons, interactive quiz cards, and quick smart habits tips to handle personal budgeting efficiently.</p>
+                    <div class="app-tags">
+                        <span class="tag">Financial Literacy</span>
+                        <span class="tag">Bite-sized Learning</span>
+                        <span class="tag">Budgeting</span>
+                        <span class="tag">Investing Basics</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id64744848395" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 8. Викторина: Битва умов -->
+            <div class="app-card" data-category="game">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🧠</div>
+                        <div class="app-title-block">
+                            <h3>Brain Battle: Trivia Quiz</h3>
+                            <div class="app-category">Game</div>
+                        </div>
+                    </div>
+                    <p class="app-description">An intellectual trivia board game. Thousands of engaging and tricky questions stretching across diverse themes to level up your general erudition and logic. [Available in Russian only]</p>
+                    <div class="app-tags">
+                        <span class="tag">Trivia Match</span>
+                        <span class="tag">Erudition</span>
+                        <span class="tag">Logic Puzzles</span>
+                        <span class="tag">Brain Games</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id1510250407" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+            <!-- 9. Kingdom Dice: Board Strategy -->
+            <div class="app-card" data-category="game">
+                <div>
+                    <div class="app-header">
+                        <div class="app-icon">🎲</div>
+                        <div class="app-title-block">
+                            <h3>Kingdom Dice: Board Strategy</h3>
+                            <div class="app-category">Game</div>
+                        </div>
+                    </div>
+                    <p class="app-description">Turn-based tabletop board strategy game where tile conquest, building economy, and combat encounters depend on dice rolls and tactical wit. Dominate opponents and grow your realm.</p>
+                    <div class="app-tags">
+                        <span class="tag">Board Game</span>
+                        <span class="tag">Turn-based Strategy</span>
+                        <span class="tag">Dice Mechanics</span>
+                        <span class="tag">Tactical Conquest</span>
+                    </div>
+                </div>
+                <div class="app-actions">
+                    <a href="#" class="btn btn-secondary">Details</a>
+                    <a href="https://apps.apple.com/US/app/id6760533329" target="_blank" class="btn btn-primary">App Store</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer id="about">
+        <p>&copy; 2026 Constantin Horoshun. All rights reserved.</p>
+        <p>Crafting high-quality mobile software and games for iOS.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | 
+            <a href="#">User Support</a>
+        </p>
+    </footer>
+
+    <script>
+        function filterCategory(category) {
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
