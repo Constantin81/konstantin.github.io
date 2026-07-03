@@ -4,6 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Константин Хорошун — iOS Разработчик | Мобильные приложения и игры</title>
+    
+    <!-- МИКРОРАЗМЕТКА ДЛЯ ПОИСКОВЫХ РОБОТОВ (Google Knowledge Graph) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": "Константин Хорошун",
+        "jobTitle": "iOS Developer",
+        "url": "https://constantin81.github.io/",
+        "publishingPrinciples": "https://constantin81.github.io/legal.html",
+        "sameAs": [
+          "https://linkedin.com/in/konstantin-khoroshun-46286479"
+        ]
+      }
+    }
+    </script>
+
     <style>
         :root {
             --bg-color: #f4f6f9;
@@ -307,7 +326,7 @@
         <div class="container">
             <h1>Полезные утилиты, планировщики и мобильные игры для iOS</h1>
             <p>Портфолио независимого разработчика. Создаю продуманные инструменты для работы, производства, повседневных задач и отдыха.</p>
-            
+             
             <div class="filter-tabs">
                 <button class="tab-btn active" onclick="filterCategory('all')">Все (9)</button>
                 <button class="tab-btn" onclick="filterCategory('utility')">Утилиты и Калькуляторы</button>
@@ -320,7 +339,7 @@
 
     <main class="container">
         <div class="apps-grid" id="apps-container">
-            
+             
             <!-- 1. Кубатурник -->
             <div class="app-card" data-category="utility">
                 <div>
@@ -544,6 +563,7 @@
         <p>&copy; 2026 Константин Хорошун. Все права защищены.</p>
         <p>Разработка качественных мобильных приложений под iOS.</p>
         <p>
+            <a href="https://linkedin.com/in/konstantin-khoroshun-46286479" target="_blank" rel="noopener noreferrer">LinkedIn Профиль</a>
             <a href="legal.html">Privacy Policy</a>
             <a href="legal.html">Support Channels</a>
         </p>
@@ -551,12 +571,10 @@
 
     <script>
         function filterCategory(category) {
-            // Обновляем активный класс кнопки
             const buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Фильтруем карточки
             const cards = document.querySelectorAll('.app-card');
             cards.forEach(card => {
                 if (category === 'all' || card.getAttribute('data-category') === category) {
