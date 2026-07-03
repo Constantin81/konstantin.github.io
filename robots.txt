@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /konstantin.github.io/
+Disallow: /konstantin.github.io/legal.html
+
+Sitemap: https://constantin81.github.io/konstantin.github.io/sitemap.xml
